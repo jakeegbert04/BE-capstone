@@ -2,10 +2,11 @@ from flask import Flask, request, jsonify
 from db import *
 import os
 from flask_marshmallow import Marshmallow
-# from routes.user_routes import user
+from routes.user_routes import user
 # from routes.auth_routes import auth
 
 from models.users import Users, user_schema, users_schema
+# from models.photos import Photos, photo_schema, photos_schema
 # from models.auth_tokens import AuthTokens, auth_token_schema
 from util.reflection import populate_object
 
@@ -24,7 +25,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 init_db(app, db)
 ma = Marshmallow(app)
 
-# app.register_blueprint(org)
+# app.register_blueprint(photos)
 app.register_blueprint(user)
 # app.register_blueprint(auth)
 
@@ -36,4 +37,4 @@ def create_all():
 
 create_all()
 if __name__ == "__main__":
-    app.run(port=8089, host="0.0.0.0", debug=True)
+    app.run(port=8086, host="0.0.0.0", debug=True)
