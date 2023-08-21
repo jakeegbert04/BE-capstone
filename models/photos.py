@@ -1,7 +1,6 @@
 import marshmallow as ma
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
-# from models.organizations import OrganizationsSchema
 from db import db
 
 
@@ -11,7 +10,7 @@ class Photos(db.Model):
     photo_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     size = db.column(db.String(), nullable=False)
     file_type = db.column(db.String, nullable=False)
-    photo_name = db.column(db.String(), nullable=False)
+    photo_name = db.column(db.String())
     active = db.Column(db.Boolean(), default=True)
 
     def __init__(self, size, file_type, photo_name, active):

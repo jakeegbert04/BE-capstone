@@ -20,3 +20,7 @@ def get_all_active_users():
 @user.route("/user/get/<id>", methods=["GET"])
 def get_users_by_id(id):
     return user_controller.get_users_by_id(id)
+
+@user.route("/user/status/<id>", methods=["PATCH"])
+def user_status(id):
+    return user_controller.user_status(id)

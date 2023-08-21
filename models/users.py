@@ -10,10 +10,10 @@ class Users(db.Model):
     user_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     username = db.Column(db.String(), nullable=False, unique=True )
     first_name = db.Column(db.String(), nullable=False)
-    last_name = db.Column(db.String())
+    last_name = db.Column(db.String(), nullable=False)
     email = db.Column(db.String(), nullable=False, unique=True)
     password = db.Column(db.String(), nullable=False)
-    phone = db.Column(db.String())
+    phone = db.Column(db.String(), unique=True)
     role = db.Column(db.String(), nullable=False)
     is_photographer = db.Column(db.Boolean())
     bio = db.Column(db.String())
@@ -34,11 +34,11 @@ class Users(db.Model):
         self.active = active
 
     def new_user():
-        return Users("", "", "", "", "", "", "", True, "", True)
+        return Users("", "", "", "", "", "", "", True, "", "", True)
 
 class UsersSchema(ma.Schema):
     class Meta:
-        fields = ['user_id', 'username', 'first_name', 'last_name', 'email', 'role', 'phone', 'is_photographer', 'bio', 'about_me' 'active']
+        fields = ['user_id', 'username', 'first_name', 'last_name', 'email', 'role', 'phone', 'is_photographer', 'bio', 'about_me', 'active']
 
 
 user_schema = UsersSchema()

@@ -3,6 +3,7 @@ from flask import request, jsonify
 
 from db import db
 from models.users import user_schema, users_schema, Users
+
 from util.reflection import populate_object
 def add_user():
     req_data = request.form if request.form else request.json
@@ -23,7 +24,7 @@ def get_all_active_users():
     users = db.session.query(Users).filter(Users.active == True).all()
 
     if not users:
-        return jsonify('No Users Exist'), 404
+        return jsonify('No Active Users Exist'), 404
     else:
         return jsonify(users_schema.dump(users)), 200
 
@@ -31,7 +32,7 @@ def get_users_by_id(id):
     user = db.session.query(Users).filter(Users.user_id == id).first()
 
     if not user:
-        return jsonify("That user doesn't exit"), 404
+        return jsonify("That user doesn't exist"), 404
 
     else:
         return jsonify(user_schema.dump(user)), 200
@@ -44,7 +45,15 @@ def update_user(id):
 
     db.session.commit()
 
-    return jsonify('User Created'), 200
+    return jsonify('User Updated'), 200
 #DEACTIVATE/ACTIVATE
+def user_status(id):
+    user_data = db.session.query(Users).filter(Users.user_id == id).first()
 
+    if user_data:
+        user_data.active = not user_data.active
+        db.session.commit()
+
+        return jsonify(user_schema.dump(user_data)), 200
+    return jsonify({"message": "No user found"}), 404
 #DELETE
