@@ -3,8 +3,11 @@ from flask import request, jsonify
 from db import db
 from models.posts import post_schema, posts_schema, Posts
 from util.reflection import populate_object
+from lib.authenticate import auth
+
 # CREATE
-def add_post():
+@auth
+def add_post(request):
     req_data = request.form if request.form else request.json
 
     if not req_data:
@@ -19,7 +22,8 @@ def add_post():
     return jsonify("Post Created"), 200
 
 #READ
-def get_all_active_posts():
+@auth
+def get_all_active_posts(request):
     posts = db.session.query(Posts). filter(Posts.active == True).all()
 
     if not posts:
@@ -27,7 +31,8 @@ def get_all_active_posts():
     else:
         return jsonify(posts_schema.dump(posts)), 200
         
-def get_post_by_id(id):
+@auth
+def get_post_by_id(request, id):
     post = db.session.query(Posts).filter(Posts.post_id == id).first()
 
     if not post:
@@ -36,7 +41,8 @@ def get_post_by_id(id):
         return jsonify(post_schema.dump(post)), 200
 
 #UPDATE
-def update_post(id):
+@auth
+def update_post(request, id):
     req_data = request.form if request.form else request.json
     existing_post = db.session.query(Posts).filter(Posts.post_id == id).first()
 
@@ -46,7 +52,8 @@ def update_post(id):
     return jsonify("Post Updated"), 200
 #DEACTIVATE/ACTIVATE
 
-def post_status(id):
+@auth
+def post_status(request, id):
     post_data = db.session.query(Posts).filter(Posts.post_id == id).first()
 
     if post_data:
@@ -57,7 +64,8 @@ def post_status(id):
     return jsonify({"message": "No post found"}), 404
 
 #DELETE
-def delete_post(id):
+@auth
+def delete_post(request, id):
 
     post = db.session.query(Posts).filter(Posts.post_id == id).first()
 

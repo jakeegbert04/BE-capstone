@@ -3,7 +3,10 @@ from flask import request, jsonify
 from db import db
 from models.links.links import link_schema, links_schema, Links
 from util.reflection import populate_object
-def add_link():
+from lib.authenticate import auth
+
+@auth
+def add_link(request):
     req_data = request.form if request.form else request.json
 
     if not req_data:
@@ -18,26 +21,48 @@ def add_link():
     return jsonify("link created"), 200
 
 #READ
-def get_all_active_links():
-    pass
+@auth
+def get_all_active_links(request):
+    links = db.session.query(Links).all()
 
-def get_link_by_id(id):
-    pass
+    if not links:
+        return jsonify("No Links Exists"), 404
+    else:
+        return jsonify(links_schema.dump(links)), 200
+
+@auth
+def get_link_by_id(request, id):
+    link = db.session.query(Links).filter(Links.link_id == id).first()
+
+    if not link:
+        return jsonify("That link does not exist"), 404
+    else:
+        return jsonify(link_schema.dump(link)), 200
+
 #UPDATE
-def update_link(id):
-    pass
-def post_status(id):
-    post_data = db.session.query(Links).filter(Links.link_id == id).first()
+def update_link(request, id):
+    req_data = request.form if request.form else request.json
+    existing_link = db.session.query(Links).filter(Links.link_id == id).first()
 
-    if post_data:
-        post_data.active = not post_data.active
+    populate_object(existing_link, req_data)
+
+    db.session.commit()
+    return jsonify("Link Updated"), 200
+
+@auth
+def link_status(request, id):
+    link_data = db.session.query(Links).filter(Links.link_id == id).first()
+
+    if link_data:
+        link_data.active = not link_data.active
         db.session.commit()
 
-        return jsonify(link_schema.dump(post_data)), 200
+        return jsonify(link_schema.dump(link_data)), 200
     return jsonify({"message": "No link found"}), 404
 
 #DELETE
-def delete_post(id):
+@auth
+def delete_link(request, id):
 
     link = db.session.query(Links).filter(Links.link_id == id).first()
 

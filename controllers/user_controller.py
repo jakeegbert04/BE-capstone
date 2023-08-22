@@ -1,5 +1,6 @@
 # CREATE
 from flask import request, jsonify
+from flask_bcrypt import generate_password_hash
 
 from db import db
 from models.users import user_schema, users_schema, Users
@@ -7,7 +8,7 @@ from models.users import user_schema, users_schema, Users
 from util.reflection import populate_object
 from lib.authenticate import auth
 
-@auth
+# @auth
 def add_user(request):
     req_data = request.form if request.form else request.json
 
@@ -17,6 +18,9 @@ def add_user(request):
     new_user = Users.new_user()
 
     populate_object(new_user, req_data)
+
+    new_user.password = generate_password_hash(new_user.password).decode("utf8")
+
     db.session.add(new_user)
     db.session.commit()
 
@@ -49,6 +53,8 @@ def update_user(request, id):
     existing_user = db.session.query(Users).filter(Users.user_id == id).first()
 
     populate_object(existing_user, req_data)
+
+    existing_user.password = generate_password_hash(existing_user.password).decode("utf8")
 
     db.session.commit()
 
