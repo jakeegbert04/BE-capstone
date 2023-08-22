@@ -57,3 +57,14 @@ def post_status(id):
     return jsonify({"message": "No post found"}), 404
 
 #DELETE
+def delete_post(id):
+
+    post = db.session.query(Posts).filter(Posts.post_id == id).first()
+
+    if not post:
+        return jsonify("That post doesn't exist"), 404
+
+    else:
+        db.session.delete(post)
+        db.session.commit()
+        return jsonify("Post Deleted")

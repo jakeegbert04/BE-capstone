@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify
 from db import *
 import os
 from flask_marshmallow import Marshmallow
+from routes.auth_routes import auth
 from routes.user_routes import user
 from routes.post_routes import post
+from routes.link_routes import link
 # from routes.auth_routes import auth
 
 from models.users import Users, user_schema, users_schema
@@ -30,7 +32,8 @@ ma = Marshmallow(app)
 # app.register_blueprint(photos)
 app.register_blueprint(user)
 app.register_blueprint(post)
-# app.register_blueprint(auth)
+app.register_blueprint(link)
+app.register_blueprint(auth)
 
 def create_all():
     with app.app_context():

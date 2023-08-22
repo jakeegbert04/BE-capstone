@@ -5,7 +5,10 @@ from db import db
 from models.users import user_schema, users_schema, Users
 
 from util.reflection import populate_object
-def add_user():
+from lib.authenticate import auth
+
+@auth
+def add_user(request):
     req_data = request.form if request.form else request.json
 
     if not req_data:
@@ -20,7 +23,8 @@ def add_user():
     return jsonify('User Created'), 200
 
 #READ
-def get_all_active_users():
+@auth
+def get_all_active_users(request):
     users = db.session.query(Users).filter(Users.active == True).all()
 
     if not users:
@@ -28,7 +32,8 @@ def get_all_active_users():
     else:
         return jsonify(users_schema.dump(users)), 200
 
-def get_users_by_id(id):
+@auth
+def get_users_by_id(request, id):
     user = db.session.query(Users).filter(Users.user_id == id).first()
 
     if not user:
@@ -36,8 +41,10 @@ def get_users_by_id(id):
 
     else:
         return jsonify(user_schema.dump(user)), 200
+
 #UPDATE
-def update_user(id):
+@auth
+def update_user(request, id):
     req_data = request.form if request.form else request.json
     existing_user = db.session.query(Users).filter(Users.user_id == id).first()
 
@@ -46,8 +53,10 @@ def update_user(id):
     db.session.commit()
 
     return jsonify('User Updated'), 200
+
 #DEACTIVATE/ACTIVATE
-def user_status(id):
+@auth
+def user_status(request, id):
     user_data = db.session.query(Users).filter(Users.user_id == id).first()
 
     if user_data:
@@ -56,4 +65,17 @@ def user_status(id):
 
         return jsonify(user_schema.dump(user_data)), 200
     return jsonify({"message": "No user found"}), 404
+
 #DELETE
+@auth
+def delete_user(request, id):
+
+    user = db.session.query(Users).filter(Users.user_id == id).first()
+
+    if not user:
+        return jsonify("That user doesn't exist"), 404
+
+    else:
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify("User Deleted")
