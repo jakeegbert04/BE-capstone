@@ -28,7 +28,8 @@ def auth_with_return(func):
         auth_info = validate_token(args[0])
 
         if auth_info:
-            args[0] = auth_info
+            kwargs["auth_info"] = auth_info
+            return func(*args, **kwargs)
         else:
             return fail_responce()
     return wrapper_auth_return

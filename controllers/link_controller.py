@@ -2,20 +2,30 @@ from flask import request, jsonify
 
 from db import db
 from models.links.links import link_schema, links_schema, Links
+from models.links.links_xref import link_xref_schema, link_xrefs_schema, LinksXRef
 from util.reflection import populate_object
-from lib.authenticate import auth
+from lib.authenticate import auth, auth_with_return
 
-@auth
-def add_link(request):
+@auth_with_return
+def add_link(request, auth_info):
     req_data = request.form if request.form else request.json
+    # print(auth_info.user_id)
 
     if not req_data:
         return jsonify("Please enter all required fields")
-    
-    new_link = Links(req_data.get('link_url'))
+
+    new_link_url = req_data.get('link_url')
+    user_id = auth_info.user_id
+
+    new_link = Links(link_url=new_link_url)
 
     
     db.session.add(new_link)
+    db.session.flush()
+
+    new_link_xref = LinksXRef(user_id=user_id, link_id=new_link.link_id)
+    print(new_link_xref)
+    db.session.add(new_link_xref)
     db.session.commit()
 
     return jsonify("link created"), 200
