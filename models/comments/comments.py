@@ -1,9 +1,8 @@
 import marshmallow as ma
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
-from db import db
-# from models.comments.comments_xref import comments_xref
 
+from db import db
 
 class Comments(db.Model):
     __tablename__ = "Comments"
@@ -13,10 +12,8 @@ class Comments(db.Model):
     description = db.Column(db.String(), nullable=False)
     rating = db.Column(db.Integer())
 
-    # user_comments = db.relationship("Users", secondary="comments_xref", back_populates = "comments")
-
-    def __init__(self, comment_id, title, description, rating, active):
-        self.comment_id = comment_id
+    def __init__(self, title, description, rating, active):
+        self.comment_id = uuid.uuid4()
         self.title = title
         self.description = description
         self.rating = rating

@@ -12,6 +12,7 @@ class Links(db.Model):
 
     def __init__(self, link_url):
         self.link_url = link_url
+        self.link_id = uuid.uuid4()
 
 class LinksSchema(ma.Schema):
     class Meta:

@@ -8,8 +8,8 @@ from models.links.links import Links
 class LinksXRef(db.Model):
     __tablename__ = "LinksXRef"
 
-    user_id = db.Column("Users", db.ForeignKey(Users.user_id), primary_key=True)
-    link_id = db.Column("Links", db.ForeignKey(Links.link_id), primary_key=True),
+    user_id = db.Column(UUID(as_uuid=True), db.ForeignKey(Users.user_id), primary_key=True)
+    link_id = db.Column(UUID(as_uuid=True), db.ForeignKey(Links.link_id), primary_key=True)
 
     user_links = db.relationship("Users", back_populates = "links_xref")
 

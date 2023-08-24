@@ -19,7 +19,6 @@ def add_link(request, auth_info):
 
     new_link = Links(link_url=new_link_url)
 
-    
     db.session.add(new_link)
     db.session.flush()
 
