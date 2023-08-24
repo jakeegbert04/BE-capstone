@@ -11,7 +11,7 @@ class LinksXRef(db.Model):
     user_id = db.Column("Users", db.ForeignKey(Users.user_id), primary_key=True)
     link_id = db.Column("Links", db.ForeignKey(Links.link_id), primary_key=True),
 
-    # user_links = db.relationship(Users, back_populates = "links")
+    user_links = db.relationship("Users", back_populates = "links_xref")
 
 
     def __init__(self, link_id, user_id):

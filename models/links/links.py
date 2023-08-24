@@ -15,8 +15,8 @@ class Links(db.Model):
 
 class LinksSchema(ma.Schema):
     class Meta:
-        fields = ['link_id', 'link_url', "user"]
-    user = ma.fields.Nested("UsersSchema")
+        fields = ['link_id', 'link_url']
+    # user = ma.fields.Nested("UsersSchema")
 
 link_schema = LinksSchema()
 links_schema = LinksSchema(many=True)

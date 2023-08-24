@@ -5,7 +5,7 @@ from db import db
 from models.users import Users
 from datetime import datetime, timedelta
 from models.auth_tokens import AuthTokens, auth_token_schema
-from lib.authenticate import auth, auth_with_return
+from lib.authenticate import auth_with_return
 
 def auth_token_add():
     token_request = request.json

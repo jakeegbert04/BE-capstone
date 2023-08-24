@@ -2,7 +2,6 @@ import marshmallow as ma
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
 from db import db
-# from models.links.links_xref import LinksXrefSchema
 
 class Users(db.Model):
     __tablename__ = "Users"
@@ -20,8 +19,8 @@ class Users(db.Model):
     about_me = db.Column(db.String())
     active = db.Column(db.Boolean(), default=True)
 
-    # links_xref = db.relationship("LinksXRef", back_populates = "user_links")
-   
+    links_xref = db.relationship("LinksXRef", back_populates = "user_links")
+    comments_xref = db.relationship("CommentsXRef", back_populates = "user_comments")
 
     def __init__(self, username, first_name, last_name, email, password, phone, role, is_photographer, bio, about_me, active):
         self.username = username
@@ -41,8 +40,9 @@ class Users(db.Model):
 
 class UsersSchema(ma.Schema):
     class Meta:
-        fields = ['user_id', 'username', 'first_name', 'last_name', 'email', 'role', 'phone', 'is_photographer', 'bio', 'about_me', 'active','links_xref']
+        fields = ['user_id', 'username', 'first_name', 'last_name', 'email', 'role', 'phone', 'is_photographer', 'bio', 'about_me', 'active', 'links_xref', "comments_xrefs"]
     links_xref = ma.fields.Nested("LinksXrefSchema", many=True)
+    comments_xrefs = ma.fields.Nested("CommentsXrefSchema", many=True)
 
 user_schema = UsersSchema()
 users_schema = UsersSchema(many=True)

@@ -13,7 +13,7 @@ class Comments(db.Model):
     description = db.Column(db.String(), nullable=False)
     rating = db.Column(db.Integer())
 
-    user_comments = db.relationship("Users", secondary="comments_xref", back_populates = "comments")
+    # user_comments = db.relationship("Users", secondary="comments_xref", back_populates = "comments")
 
     def __init__(self, comment_id, title, description, rating, active):
         self.comment_id = comment_id
