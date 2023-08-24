@@ -20,7 +20,7 @@ class Comments(db.Model):
         self.active = active
 
     def new_comment():
-        return Comments("", "", "", None, True)
+        return Comments("", "", 0, True)
 
 class CommentsSchema(ma.Schema):
     class Meta:

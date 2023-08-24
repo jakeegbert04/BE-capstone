@@ -2,22 +2,25 @@ from flask import request, jsonify
 
 from db import db
 from models.comments.comments import comment_schema, comments_schema, Comments
+from models.comments.comments_xref import CommentsXRef
 from util.reflection import populate_object
-from lib.authenticate import auth
+from lib.authenticate import auth, auth_with_return
 
-@auth
-def add_comment(request):
+@auth_with_return
+def add_comment(request, auth_info):
     req_data = request.form if request.form else request.json
 
     if not req_data:
         return jsonify("Please enter all required fields")
 
     new_comment = Comments.new_comment()
-
     populate_object(new_comment, req_data)
-
-
     db.session.add(new_comment)
+    db.session.flush()
+
+    user_id = auth_info.user_id
+    new_comment_xref = CommentsXRef(user_id=user_id, comment_id=new_comment.comment_id)
+    db.session.add(new_comment_xref)
     db.session.commit()
 
     return jsonify('Comment Created'), 200
@@ -42,6 +45,7 @@ def get_comment_by_id(request, id):
         return jsonify(comment_schema.dump(comment)), 200
 
 #UPDATE
+@auth
 def update_comment(request, id):
     req_data = request.form if request.form else request.json
     existing_comment = db.session.query(Comments).filter(Comments.comment_id == id).first()
