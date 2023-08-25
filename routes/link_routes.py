@@ -21,3 +21,7 @@ def get_link_by_id(id):
 @link.route('/link/delete/<id>', methods=["DELETE"])
 def delete_link(id):
     return link_controller.delete_link(request, id)
+
+@link.route("/links/delete/<user_id>", methods=["Delete"])
+def delete_all_user_links(user_id):
+    return link_controller.delete_all_user_links(request, user_id)

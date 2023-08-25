@@ -36,7 +36,10 @@ def auth_token_add():
     return jsonify({"message" : {"auth_token": auth_token_schema.dump(new_token)}})
 
 @auth_with_return
-def auth_token_remove(request, auth_info):
+def auth_token_remove(request, auth_info, user_id=None):
+    if not user_id:
+        user_id = auth_info.user_id
+        
     auth_data = db.session.query(AuthTokens).filter(AuthTokens.user_id == auth_info.user_id).first()
     
     if auth_data:

@@ -4,9 +4,10 @@ from flask_bcrypt import generate_password_hash
 
 from db import db
 from models.users import user_schema, users_schema, Users
-
+from controllers.link_controller import delete_all_user_links
+from controllers.auth_controller import auth_token_remove
 from util.reflection import populate_object
-from lib.authenticate import auth
+from lib.authenticate import auth, auth_with_return
 
 # @auth
 def add_user(request):
@@ -73,15 +74,19 @@ def user_status(request, id):
     return jsonify({"message": "No user found"}), 404
 
 #DELETE
-@auth
-def delete_user(request, id):
+@auth_with_return
+def delete_user(request, id, auth_info):
 
     user = db.session.query(Users).filter(Users.user_id == id).first()
 
     if not user:
         return jsonify("That user doesn't exist"), 404
 
-    else:
-        db.session.delete(user)
-        db.session.commit()
-        return jsonify("User Deleted")
+    if id == str(auth_info.user_id):
+        return jsonify("Can't delete your self"), 404
+
+    auth_token_remove(request, auth_info=auth_info.user_id, user_id=id)
+    delete_all_user_links(request, id)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify("User Deleted")

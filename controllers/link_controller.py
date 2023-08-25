@@ -72,3 +72,26 @@ def delete_link(request, id):
         db.session.commit()
 
         return jsonify("Link Deleted")
+
+@auth
+def delete_all_user_links(request, user_id):
+
+    links_xrefs = db.session.query(LinksXRef).filter(LinksXRef.user_id == user_id).all()
+
+    if not links_xrefs:
+        return jsonify("No links found for the user"), 404
+
+    link_ids_to_delete = [xref.link_id for xref in links_xrefs]
+
+    for link_id in link_ids_to_delete:
+        link_xrefs = db.session.query(LinksXRef).filter(LinksXRef.link_id == link_id).all()
+        for link_xref in link_xrefs:
+            db.session.delete(link_xref)
+        
+        link = db.session.query(Links).filter(Links.link_id == link_id).first()
+        if link:
+            db.session.delete(link)
+
+    db.session.commit()
+
+    return jsonify("All links for the user have been deleted")
