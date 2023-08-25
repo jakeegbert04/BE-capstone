@@ -1,7 +1,6 @@
 from flask import Blueprint, request
 from controllers import user_controller
 
-
 user = Blueprint("user", __name__)
 @user.route('/user/add', methods=["POST"])
 def add_user():
@@ -10,7 +9,6 @@ def add_user():
 @user.route('/user/update/<id>', methods=["PUT"])
 def update_user(id):
     return user_controller.update_user(request, id)
-
 
 @user.route('/users/get', methods=['GET'])
 def get_all_active_users():

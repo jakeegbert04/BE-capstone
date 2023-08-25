@@ -1,0 +1,609 @@
+{
+	"info": {
+		"_postman_id": "be2e196d-7b18-4db5-9f79-f4357d6bcef1",
+		"name": "Capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26402577"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "user add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"username\": \"jaker\",\n    \"first_name\": \"Jake\",\n    \"last_name\": \"egbert\",\n    \"email\": \"jake+1@devpipeline.com\",\n    \"password\": \"1234\",\n    \"phone\": \"801-555-5519\",\n    \"role\":\"admin\",\n    \"is_photographer\": 1,\n    \"bio\": \"food\",\n    \"about_me\": \"I like food\",\n    \"active\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8089/user/add",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authtoken",
+								"value": "d31a9c8e-dbe0-430a-94b8-286db9dc537a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8089/users/get",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"users",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8089/user/get/1255586a-25ae-4f76-bbf3-08f02e0a6a35",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"user",
+								"get",
+								"1255586a-25ae-4f76-bbf3-08f02e0a6a35"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"first_name\": \"Jake\",\n   \"last_name\": \"egbert\",\n    \"email\": \"jake+update@devpipeline.com\",\n    \"phone\": \"801-555-5579\",\n    \"city\": \"orem\",\n    \"state\": \"Utah\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8089/user/update/51894f42-0154-43be-b3ec-d68613d3e3ab",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"user",
+								"update",
+								"51894f42-0154-43be-b3ec-d68613d3e3ab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8089/user/status/cacb0a92-0d75-4b62-9d1f-76dbc60b1c92",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"user",
+								"status",
+								"cacb0a92-0d75-4b62-9d1f-76dbc60b1c92"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user delete",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Post add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Lakes\",\n    \"description\":\"can lake\",\n    \"location\":\"canada\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8089/post/add",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"post",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post get all",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "post update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8089/post/update/07d04ec0-de1c-4c52-a350-84c2903f4023",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"post",
+								"update",
+								"07d04ec0-de1c-4c52-a350-84c2903f4023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post status",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "links",
+			"item": [
+				{
+					"name": "link add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"link_url\": \"bob\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8089/link/add",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"link",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "link get all",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Link Get By Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "link update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"link_url\": \"john is lame\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8089/link/update/d8aa369e-3177-4c35-83be-cce2e91f9be9",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"link",
+								"update",
+								"d8aa369e-3177-4c35-83be-cce2e91f9be9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Delete",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Comment Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"bob\",\n    \"description\":\"hey\",\n    \"rating\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8089/comment/add",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"comment",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Get All",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8089/comment/get/76cdc5d2-8a21-41a9-9876-c4c842184aeb",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"comment",
+								"get",
+								"76cdc5d2-8a21-41a9-9876-c4c842184aeb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8089/comment/update/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"comment",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8089/comment/status/76cdc5d2-8a21-41a9-9876-c4c842184aeb",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"comment",
+								"status",
+								"76cdc5d2-8a21-41a9-9876-c4c842184aeb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8089/comment/delete/5d457cab-1c08-4be6-8bf3-99cacbb2e3e5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8089",
+							"path": [
+								"comment",
+								"delete",
+								"5d457cab-1c08-4be6-8bf3-99cacbb2e3e5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"authtoken\",jsonData.authtoken);",
+							"console.log(pm.variables.get(\"authtoken\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"jake+1113@devpipeline.com\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8089/user/auth",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8089",
+					"path": [
+						"user",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "e26a72bd-cfd5-497a-bd9e-5003b459b22f",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "authtoken",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "authtoken",
+			"value": ""
+		}
+	]
+}

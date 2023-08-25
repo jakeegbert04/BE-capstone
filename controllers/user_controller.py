@@ -9,7 +9,6 @@ from controllers.auth_controller import delete_user_token
 from util.reflection import populate_object
 from lib.authenticate import auth, auth_with_return
 
-# @auth
 def add_user(request):
     req_data = request.form if request.form else request.json
 
@@ -27,7 +26,6 @@ def add_user(request):
 
     return jsonify('User Created'), 200
 
-#READ
 @auth
 def get_all_active_users(request):
     users = db.session.query(Users).filter(Users.active == True).all()
@@ -47,7 +45,6 @@ def get_users_by_id(request, id):
     else:
         return jsonify(user_schema.dump(user)), 200
 
-#UPDATE
 @auth
 def update_user(request, id):
     req_data = request.form if request.form else request.json
@@ -61,7 +58,6 @@ def update_user(request, id):
 
     return jsonify('User Updated'), 200
 
-#DEACTIVATE/ACTIVATE
 @auth
 def user_status(request, id):
     user_data = db.session.query(Users).filter(Users.user_id == id).first()
@@ -73,7 +69,6 @@ def user_status(request, id):
         return jsonify(user_schema.dump(user_data)), 200
     return jsonify({"message": "No user found"}), 404
 
-#DELETE
 @auth_with_return
 def delete_user(request, id, auth_info):
 

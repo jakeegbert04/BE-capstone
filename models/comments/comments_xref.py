@@ -3,7 +3,6 @@ from sqlalchemy.dialects.postgresql import UUID
 
 from db import db
 from models.comments.comments import Comments
-# from models.users import Users
 
 class CommentsXRef(db.Model):
     __tablename__ = "CommentsXRef"

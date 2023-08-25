@@ -5,7 +5,6 @@ from models.posts import post_schema, posts_schema, Posts
 from util.reflection import populate_object
 from lib.authenticate import auth
 
-# CREATE
 @auth
 def add_post(request):
     req_data = request.form if request.form else request.json
@@ -21,7 +20,6 @@ def add_post(request):
 
     return jsonify("Post Created"), 200
 
-#READ
 @auth
 def get_all_active_posts(request):
     posts = db.session.query(Posts). filter(Posts.active == True).all()
@@ -40,7 +38,6 @@ def get_post_by_id(request, id):
     else:
         return jsonify(post_schema.dump(post)), 200
 
-#UPDATE
 @auth
 def update_post(request, id):
     req_data = request.form if request.form else request.json
@@ -50,7 +47,6 @@ def update_post(request, id):
 
     db.session.commit()
     return jsonify("Post Updated"), 200
-#DEACTIVATE/ACTIVATE
 
 @auth
 def post_status(request, id):
@@ -63,7 +59,6 @@ def post_status(request, id):
         return jsonify(post_schema.dump(post_data)), 200
     return jsonify({"message": "No post found"}), 404
 
-#DELETE
 @auth
 def delete_post(request, id):
 

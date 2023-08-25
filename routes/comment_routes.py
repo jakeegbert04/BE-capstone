@@ -1,7 +1,6 @@
 from flask import Blueprint, request
 from controllers import comment_controller
 
-
 comment = Blueprint("comment", __name__)
 @comment.route('/comment/add', methods=["POST"])
 def add_comment():
@@ -10,7 +9,6 @@ def add_comment():
 @comment.route('/comment/update/<id>', methods=["PUT"])
 def update_comment(id):
     return comment_controller.update_comment(request, id)
-
 
 @comment.route('/comments/get', methods=['GET'])
 def get_all_active_comments():

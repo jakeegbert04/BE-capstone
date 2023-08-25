@@ -25,7 +25,6 @@ def add_comment(request, auth_info):
 
     return jsonify('Comment Created'), 200
 
-#READ
 @auth
 def get_all_active_comments(request):
     comments = db.session.query(Comments).filter(Comments.active == True).all()
@@ -44,7 +43,6 @@ def get_comment_by_id(request, id):
     else:
         return jsonify(comment_schema.dump(comment)), 200
 
-#UPDATE
 @auth
 def update_comment(request, id):
     req_data = request.form if request.form else request.json
@@ -66,7 +64,6 @@ def comment_status(request, id):
         return jsonify(comment_schema.dump(comment_data)), 200
     return jsonify({"message": "No comment found"}), 404
 
-#DELETE
 @auth
 def delete_comment(request, id):
 
