@@ -11,6 +11,7 @@ class Comments(db.Model):
     title = db.Column(db.String(), nullable=False)
     description = db.Column(db.String(), nullable=False)
     rating = db.Column(db.Integer())
+    active = db.Column(db.Boolean(), default=True)
 
     def __init__(self, title, description, rating, active):
         self.comment_id = uuid.uuid4()

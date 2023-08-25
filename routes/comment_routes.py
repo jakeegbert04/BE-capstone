@@ -16,7 +16,14 @@ def update_comment(id):
 def get_all_active_comments():
     return comment_controller.get_all_active_comments(request)
 
-
 @comment.route("/comment/get/<id>", methods=["GET"])
 def get_comment_by_id(id):
     return comment_controller.get_comment_by_id(request, id)
+
+@comment.route("/comment/status/<id>", methods=["PATCH"])
+def comment_status(id):
+    return comment_controller.comment_status(request, id)
+
+@comment.route('/comment/delete/<id>', methods=["DELETE"])
+def delete_comment(id):
+    return comment_controller.delete_comment(request, id)
