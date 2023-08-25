@@ -5,7 +5,7 @@ from db import db
 from models.users import Users
 from datetime import datetime, timedelta
 from models.auth_tokens import AuthTokens, auth_token_schema
-from lib.authenticate import auth_with_return
+from lib.authenticate import auth_with_return, auth
 
 def auth_token_add():
     token_request = request.json
@@ -36,14 +36,22 @@ def auth_token_add():
     return jsonify({"message" : {"auth_token": auth_token_schema.dump(new_token)}})
 
 @auth_with_return
-def auth_token_remove(request, auth_info, user_id=None):
-    if not user_id:
+def auth_token_remove(request, auth_info):
+    if user_id is None:
         user_id = auth_info.user_id
         
-    auth_data = db.session.query(AuthTokens).filter(AuthTokens.user_id == auth_info.user_id).first()
+    auth_data = db.session.query(AuthTokens).filter(AuthTokens.user_id == user_id).first()
     
     if auth_data:
         db.session.delete(auth_data)
         db.session.commit()
     
     return jsonify("User Logged Out"), 200
+
+# @auth
+def delete_user_token(user_id):
+    auth_data = db.session.query(AuthTokens).filter(AuthTokens.user_id == user_id).first()
+    
+    if auth_data:
+        db.session.delete(auth_data)
+        db.session.commit()

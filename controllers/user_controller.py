@@ -5,7 +5,7 @@ from flask_bcrypt import generate_password_hash
 from db import db
 from models.users import user_schema, users_schema, Users
 from controllers.link_controller import delete_all_user_links
-from controllers.auth_controller import auth_token_remove
+from controllers.auth_controller import delete_user_token
 from util.reflection import populate_object
 from lib.authenticate import auth, auth_with_return
 
@@ -85,7 +85,7 @@ def delete_user(request, id, auth_info):
     if id == str(auth_info.user_id):
         return jsonify("Can't delete your self"), 404
 
-    auth_token_remove(request, auth_info=auth_info.user_id, user_id=id)
+    delete_user_token(id)
     delete_all_user_links(request, id)
     db.session.delete(user)
     db.session.commit()
